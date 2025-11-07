@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hospital de Emergência e Trauma - Campina Grande</title>
+    <!-- Favicon usando a primeira imagem -->
+    <link rel="icon" type="image/png" href="./TRAUMA/logo.png" />
+
+    <style>
+      * { box-sizing: border-box; }
+      html, body { height: 100%; }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+        /* Plano de fundo usando a segunda imagem com leve overlay para melhor legibilidade */
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35)),
+          url('./TRAUMA/trauma.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        background: rgba(255, 255, 255, 0.88);
+        padding: 14px 18px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      header img.logo {
+        height: 80px;
+        width: auto;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+      }
+
+      header .titles {
+        line-height: 1.25;
+      }
+
+      header .titles strong { font-size: 18px; }
+      header .titles span { font-size: 14px; color: #333; }
+
+      main {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .content-card {
+        background: rgba(255, 255, 255, 0.88);
+        padding: 24px 28px;
+        border-radius: 10px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        max-width: 720px;
+        width: calc(100% - 48px);
+      }
+
+      .content-card h1 {
+        margin: 0 0 8px 0;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 700;
+        color: #1f2937; /* slate-800 */
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <!-- Logo usando a primeira imagem -->
+      <img class="logo" src="./TRAUMA/logo.png" alt="Governo da Paraíba - Secretaria da Saúde" />
+      <div class="titles">
+        <strong>Hospital de Emergência e Trauma</strong><br />
+        <span>Campina Grande - Dom Luiz Gonzaga Fernandes</span>
+      </div>
+    </header>
+
+    <main>
+      <div class="content-card">
+        <h1>Ambiente teste para implantação de sistema de atendimento com IA</h1>
+        <p>Bem-vindo. Use o botão do assistente para abrir o bate‑papo.</p>
+      </div>
+    </main>
+
+    <!-- Widget Env Script -->
+    <script>
+      window.ZWidget = {
+        AgentURL: "https://platform.zaia.app/embed/chat/69527",
+      };
+    </script>
+    <!-- Widget Loader Script -->
+    <script src="https://platform.zaia.app/script/widget-loader.js"></script>
+  </body>
+</html>
+

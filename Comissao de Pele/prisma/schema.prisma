@@ -1,0 +1,486 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// Enums
+enum UserRole {
+  ADMIN
+  COORDINATOR
+  SPECIALIST_NURSE
+  DOCTOR
+  PHYSIOTHERAPIST
+  PHARMACIST
+  TECHNICIAN
+  VISITOR
+  PATIENT
+}
+
+enum WoundType {
+  PRESSURE_ULCER
+  DIABETIC_ULCER
+  VENOUS_ULCER
+  ARTERIAL_ULCER
+  SURGICAL_WOUND
+  TRAUMATIC_WOUND
+  BURN
+  OTHER
+}
+
+enum WoundStage {
+  STAGE_1
+  STAGE_2
+  STAGE_3
+  STAGE_4
+  UNSTAGEABLE
+  DEEP_TISSUE_INJURY
+}
+
+enum TissueType {
+  GRANULATION
+  EPITHELIAL
+  SLOUGH
+  NECROTIC
+  MIXED
+}
+
+enum ExudateAmount {
+  NONE
+  MINIMAL
+  MODERATE
+  HEAVY
+}
+
+enum ExudateType {
+  SEROUS
+  SEROSANGUINEOUS
+  SANGUINEOUS
+  PURULENT
+  OTHER
+}
+
+enum AnalysisStatus {
+  PENDING
+  APPROVED
+  UNDER_REVIEW
+  REJECTED
+}
+
+enum ConfidenceLevel {
+  LOW
+  MEDIUM
+  HIGH
+  VERY_HIGH
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+enum MessageType {
+  TEXT
+  IMAGE
+  DOCUMENT
+  SYSTEM
+}
+
+// Tabelas principais
+model Organization {
+  id          String   @id @default(cuid())
+  name        String
+  cnpj        String?  @unique
+  address     String?
+  phone       String?
+  email       String?
+  logo        String?
+  settings    Json?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  users       User[]
+  patients    Patient[]
+  inventory   InventoryItem[]
+  protocols   Protocol[]
+  auditLogs   AuditLog[]
+
+  @@map("organizations")
+}
+
+model User {
+  id             String   @id @default(cuid())
+  email          String   @unique
+  password       String
+  name           String
+  role           UserRole
+  coren          String?  // Registro profissional
+  crm            String?  // Para médicos
+  crefito        String?  // Para fisioterapeutas
+  crf            String?  // Para farmacêuticos
+  phone          String?
+  avatar         String?
+  isActive       Boolean  @default(true)
+  lastLogin      DateTime?
+  organizationId String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  
+  // Relacionamentos
+  patientsCreated     Patient[]        @relation("PatientCreatedBy")
+  patientsAssigned    PatientAssignment[]
+  woundAssessments    WoundAssessment[]
+  aiAnalysisApproved  AIAnalysis[]     @relation("ApprovedBy")
+  treatmentPlans      TreatmentPlan[]
+  followUps           FollowUp[]
+  appointments        Appointment[]
+  messagesFrom        Message[]        @relation("MessageFrom")
+  messagesTo          Message[]        @relation("MessageTo")
+  auditLogs           AuditLog[]
+
+  @@map("users")
+}
+
+model Patient {
+  id             String   @id @default(cuid())
+  name           String
+  cpf            String   @unique
+  rg             String?
+  birthDate      DateTime
+  gender         String
+  phone          String?
+  email          String?
+  address        String?
+  emergencyContact String?
+  emergencyPhone String?
+  medicalHistory Json?
+  allergies      String?
+  medications    String?
+  isActive       Boolean  @default(true)
+  organizationId String
+  createdById    String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  createdBy      User         @relation("PatientCreatedBy", fields: [createdById], references: [id])
+  
+  // Relacionamentos
+  assignments    PatientAssignment[]
+  lesions        Lesion[]
+  treatmentPlans TreatmentPlan[]
+  followUps      FollowUp[]
+  appointments   Appointment[]
+  messages       Message[]
+  consentLogs    ConsentLog[]
+
+  @@map("patients")
+}
+
+model PatientAssignment {
+  id        String   @id @default(cuid())
+  patientId String
+  userId    String
+  isPrimary Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  patient   Patient @relation(fields: [patientId], references: [id])
+  user      User    @relation(fields: [userId], references: [id])
+
+  @@unique([patientId, userId])
+  @@map("patient_assignments")
+}
+
+model Lesion {
+  id          String     @id @default(cuid())
+  patientId   String
+  type        WoundType
+  stage       WoundStage?
+  location    String
+  description String?
+  isActive    Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  patient     Patient @relation(fields: [patientId], references: [id])
+  
+  // Relacionamentos
+  assessments WoundAssessment[]
+  photos      Photo[]
+  aiAnalyses  AIAnalysis[]
+
+  @@map("lesions")
+}
+
+model WoundAssessment {
+  id              String        @id @default(cuid())
+  lesionId        String
+  assessorId      String
+  length          Float?        // cm
+  width           Float?        // cm
+  depth           Float?        // cm
+  area            Float?        // cm²
+  tissueType      TissueType?
+  exudateAmount   ExudateAmount?
+  exudateType     ExudateType?
+  painLevel       Int?          // 0-10
+  odor            Boolean       @default(false)
+  infection       Boolean       @default(false)
+  notes           String?
+  createdAt       DateTime      @default(now())
+
+  lesion          Lesion @relation(fields: [lesionId], references: [id])
+  assessor        User   @relation(fields: [assessorId], references: [id])
+
+  @@map("wound_assessments")
+}
+
+model Photo {
+  id          String   @id @default(cuid())
+  lesionId    String
+  url         String
+  filename    String
+  size        Int
+  mimeType    String
+  description String?
+  isMain      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  lesion      Lesion @relation(fields: [lesionId], references: [id])
+  
+  // Relacionamentos
+  aiAnalyses  AIAnalysis[]
+
+  @@map("photos")
+}
+
+model AIAnalysis {
+  id             String          @id @default(cuid())
+  photoId        String
+  lesionId       String
+  model          String          // gpt-4o-vision, gemini-pro-vision, etc.
+  confidence     Float           // 0-100
+  confidenceLevel ConfidenceLevel
+  findings       Json            // Lista de achados estruturados
+  recommendations Json           // Lista de recomendações
+  status         AnalysisStatus  @default(PENDING)
+  approvedById   String?
+  approvedAt     DateTime?
+  feedback       String?         // Feedback do profissional
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  photo          Photo  @relation(fields: [photoId], references: [id])
+  lesion         Lesion @relation(fields: [lesionId], references: [id])
+  approvedBy     User?  @relation("ApprovedBy", fields: [approvedById], references: [id])
+
+  @@map("ai_analyses")
+}
+
+model Protocol {
+  id             String   @id @default(cuid())
+  name           String
+  type           String   // COB, EPUAP, SUS, ANVISA
+  version        String
+  content        Json
+  isActive       Boolean  @default(true)
+  organizationId String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization   Organization @relation(fields: [organizationId], references: [id])
+
+  @@map("protocols")
+}
+
+model TreatmentPlan {
+  id          String   @id @default(cuid())
+  patientId   String
+  createdById String
+  title       String
+  description String?
+  startDate   DateTime
+  endDate     DateTime?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  patient     Patient @relation(fields: [patientId], references: [id])
+  createdBy   User    @relation(fields: [createdById], references: [id])
+  
+  // Relacionamentos
+  items       TreatmentItem[]
+
+  @@map("treatment_plans")
+}
+
+model TreatmentItem {
+  id              String   @id @default(cuid())
+  treatmentPlanId String
+  description     String
+  frequency       String   // Ex: "2x ao dia", "a cada 48h"
+  duration        String?  // Ex: "7 dias", "até cicatrização"
+  materials       Json?    // Lista de materiais necessários
+  instructions    String?
+  isCompleted     Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  treatmentPlan   TreatmentPlan @relation(fields: [treatmentPlanId], references: [id])
+
+  @@map("treatment_items")
+}
+
+model FollowUp {
+  id          String   @id @default(cuid())
+  patientId   String
+  userId      String
+  type        String   // presencial, domiciliar, teleconsulta
+  scheduledAt DateTime
+  completedAt DateTime?
+  notes       String?
+  nextVisit   DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  patient     Patient @relation(fields: [patientId], references: [id])
+  user        User    @relation(fields: [userId], references: [id])
+
+  @@map("follow_ups")
+}
+
+model Appointment {
+  id          String            @id @default(cuid())
+  patientId   String
+  userId      String
+  title       String
+  description String?
+  scheduledAt DateTime
+  duration    Int               @default(30) // minutos
+  status      AppointmentStatus @default(SCHEDULED)
+  type        String            // consulta, curativo, avaliação
+  location    String?
+  notes       String?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  patient     Patient @relation(fields: [patientId], references: [id])
+  user        User    @relation(fields: [userId], references: [id])
+
+  @@map("appointments")
+}
+
+model Message {
+  id          String      @id @default(cuid())
+  fromId      String
+  toId        String?     // null para mensagens do sistema
+  patientId   String?
+  type        MessageType @default(TEXT)
+  content     String
+  attachments Json?
+  isRead      Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+
+  from        User     @relation("MessageFrom", fields: [fromId], references: [id])
+  to          User?    @relation("MessageTo", fields: [toId], references: [id])
+  patient     Patient? @relation(fields: [patientId], references: [id])
+
+  @@map("messages")
+}
+
+model InventoryItem {
+  id             String   @id @default(cuid())
+  name           String
+  category       String   // curativo, medicamento, equipamento
+  code           String?
+  description    String?
+  unit           String   // unidade, caixa, frasco
+  currentStock   Int      @default(0)
+  minStock       Int      @default(0)
+  maxStock       Int?
+  unitCost       Float?
+  supplier       String?
+  expirationDate DateTime?
+  isActive       Boolean  @default(true)
+  organizationId String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  
+  // Relacionamentos
+  movements      StockMovement[]
+
+  @@map("inventory_items")
+}
+
+model StockMovement {
+  id            String   @id @default(cuid())
+  itemId        String
+  type          String   // entrada, saída, ajuste
+  quantity      Int
+  reason        String?
+  reference     String?  // número da nota, paciente, etc.
+  createdAt     DateTime @default(now())
+
+  item          InventoryItem @relation(fields: [itemId], references: [id])
+
+  @@map("stock_movements")
+}
+
+model ConsentLog {
+  id          String   @id @default(cuid())
+  patientId   String
+  type        String   // LGPD, IA_ANALYSIS, TELEMEDICINE
+  version     String
+  content     String
+  accepted    Boolean
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+
+  patient     Patient @relation(fields: [patientId], references: [id])
+
+  @@map("consent_logs")
+}
+
+model AuditLog {
+  id             String   @id @default(cuid())
+  userId         String?
+  organizationId String
+  action         String
+  resource       String
+  resourceId     String?
+  details        Json?
+  ipAddress      String?
+  userAgent      String?
+  createdAt      DateTime @default(now())
+
+  user           User?        @relation(fields: [userId], references: [id])
+  organization   Organization @relation(fields: [organizationId], references: [id])
+
+  @@map("audit_logs")
+}
+
+model SystemConfig {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("system_configs")
+}
