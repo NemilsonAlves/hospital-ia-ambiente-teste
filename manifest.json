@@ -1,7 +1,8 @@
 {
   "name": "Ambiente teste - Atendimento com IA",
   "short_name": "Hospital IA",
-  "start_url": "/index.html",
+  "start_url": ".",
+  "scope": ".",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
@@ -18,4 +19,3 @@
     }
   ]
 }
-

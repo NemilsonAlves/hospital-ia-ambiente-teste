@@ -1,10 +1,10 @@
 const CACHE_NAME = 'pwa-cache-v1';
 const OFFLINE_URLS = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/TRAUMA/logo.png',
-  '/TRAUMA/trauma.png'
+  '.',
+  './index.html',
+  './manifest.json',
+  './TRAUMA/logo.png',
+  './TRAUMA/trauma.png'
 ];
 
 self.addEventListener('install', (event) => {
@@ -32,8 +32,7 @@ self.addEventListener('fetch', (event) => {
         const copy = response.clone();
         caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
         return response;
-      }).catch(() => caches.match('/index.html'));
+      }).catch(() => caches.match('./index.html'));
     })
   );
 });
-
