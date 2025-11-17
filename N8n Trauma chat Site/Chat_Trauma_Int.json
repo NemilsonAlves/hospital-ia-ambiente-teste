@@ -11,7 +11,7 @@
       },
       "id": "c1",
       "name": "Chat Trigger",
-      "type": "n8n-nodes-langchain.chatTrigger",
+      "type": "n8n-nodes-langchainjs.chatTrigger",
       "typeVersion": 1,
       "position": [200, 200]
     },
@@ -60,7 +60,7 @@
       },
       "id": "c5",
       "name": "Respond List",
-      "type": "n8n-nodes-langchain.respondToChat",
+      "type": "n8n-nodes-langchainjs.respondToChat",
       "typeVersion": 1,
       "position": [1080, 200]
     },
@@ -107,7 +107,7 @@
       },
       "id": "c9",
       "name": "Respond Invalid",
-      "type": "n8n-nodes-langchain.respondToChat",
+      "type": "n8n-nodes-langchainjs.respondToChat",
       "typeVersion": 1,
       "position": [1740, 360]
     },
@@ -315,7 +315,7 @@
       },
       "id": "c20",
       "name": "Respond Ticket",
-      "type": "n8n-nodes-langchain.respondToChat",
+      "type": "n8n-nodes-langchainjs.respondToChat",
       "typeVersion": 1,
       "position": [3720, 200]
     },
@@ -328,7 +328,7 @@
       },
       "id": "c20b",
       "name": "Vector Search (Supabase)",
-      "type": "n8n-nodes-langchain.vectorStoreSupabase",
+      "type": "n8n-nodes-langchainjs.vectorStoreSupabase",
       "typeVersion": 1,
       "position": [3940, 260]
     },
@@ -352,7 +352,7 @@
       },
       "id": "c21",
       "name": "Sector Agent",
-      "type": "n8n-nodes-langchain.agent",
+      "type": "n8n-nodes-langchainjs.agent",
       "typeVersion": 1,
       "position": [3940, 200]
     },
@@ -374,7 +374,7 @@
       },
       "id": "c23",
       "name": "Respond Final",
-      "type": "n8n-nodes-langchain.respondtochat",
+      "type": "n8n-nodes-langchainjs.respondToChat",
       "typeVersion": 1,
       "position": [4380, 200]
     },
@@ -384,7 +384,7 @@
       },
       "id": "c24",
       "name": "Supabase Vector Store",
-      "type": "n8n-nodes-langchain.vectorStoreSupabase",
+      "type": "n8n-nodes-langchainjs.vectorStoreSupabase",
       "typeVersion": 1,
       "position": [4160, 80]
     },
@@ -394,7 +394,7 @@
       },
       "id": "c25",
       "name": "Vector QA Tool",
-      "type": "n8n-nodes-langchain.toolVectorStoreQuestionAnswer",
+      "type": "n8n-nodes-langchainjs.toolVectorStoreQuestionAnswer",
       "typeVersion": 1,
       "position": [4380, 80]
     }
