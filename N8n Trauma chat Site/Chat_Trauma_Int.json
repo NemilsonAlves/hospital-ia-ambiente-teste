@@ -310,6 +310,7 @@
     {
       "parameters": {
         "message": "Seu protocolo é: ={{$json.ticket}}. Como posso ajudar no setor ={{$json.sector_name}}?",
+        "waitForUserReply": true,
         "options": {"enableStreaming": true}
       },
       "id": "c20",
@@ -317,6 +318,29 @@
       "type": "n8n-nodes-langchain.respondToChat",
       "typeVersion": 1,
       "position": [3720, 200]
+    },
+    {
+      "parameters": {
+        "operation": "similaritySearch",
+        "namespace": "={{$json.vector_namespace}}",
+        "query": "={{$json.response || $json.text || ''}}",
+        "k": 5
+      },
+      "id": "c20b",
+      "name": "Vector Search (Supabase)",
+      "type": "n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [3940, 260]
+    },
+    {
+      "parameters": {
+        "functionCode": "const results = items.map(i=>i.json).filter(Boolean);\nlet ctx = 'Resultados relacionados (RAG):\\n' + results.map((r,idx)=>`[${idx+1}] ${r.text || r.content || ''}`).join('\\n');\nreturn [{ json: { rag_context: ctx } }];"
+      },
+      "id": "c20c",
+      "name": "Build QA Context",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [4160, 260]
     },
     {
       "parameters": {
@@ -393,7 +417,9 @@
     "Fetch Functions Catalog": {"main": [[{"node": "Build Agent Context", "type": "main", "index": 0}]]},
     "Build Agent Context": {"main": [[{"node": "Wait Ticket 7s", "type": "main", "index": 0}]]},
     "Wait Ticket 7s": {"main": [[{"node": "Respond Ticket", "type": "main", "index": 0}]]},
-    "Respond Ticket": {"main": [[{"node": "Sector Agent", "type": "main", "index": 0}]]},
+    "Respond Ticket": {"main": [[{"node": "Vector Search (Supabase)", "type": "main", "index": 0}]]},
+    "Vector Search (Supabase)": {"main": [[{"node": "Build QA Context", "type": "main", "index": 0}]]},
+    "Build QA Context": {"main": [[{"node": "Sector Agent", "type": "main", "index": 0}]]},
     "Sector Agent": {"main": [[{"node": "Wait Final 7s", "type": "main", "index": 0}]]},
     "Wait Final 7s": {"main": [[{"node": "Respond Final", "type": "main", "index": 0}]]}
   },
