@@ -377,6 +377,26 @@
       "type": "n8n-nodes-langchain.respondtochat",
       "typeVersion": 1,
       "position": [4380, 200]
+    },
+    {
+      "parameters": {
+        "namespace": "={{$json.vector_namespace}}"
+      },
+      "id": "c24",
+      "name": "Supabase Vector Store",
+      "type": "n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [4160, 80]
+    },
+    {
+      "parameters": {
+        "k": 5
+      },
+      "id": "c25",
+      "name": "Vector QA Tool",
+      "type": "n8n-nodes-langchain.toolVectorStoreQuestionAnswer",
+      "typeVersion": 1,
+      "position": [4380, 80]
     }
   ],
   "connections": {
@@ -420,8 +440,9 @@
     "Respond Ticket": {"main": [[{"node": "Vector Search (Supabase)", "type": "main", "index": 0}]]},
     "Vector Search (Supabase)": {"main": [[{"node": "Build QA Context", "type": "main", "index": 0}]]},
     "Build QA Context": {"main": [[{"node": "Sector Agent", "type": "main", "index": 0}]]},
-    "Sector Agent": {"main": [[{"node": "Wait Final 7s", "type": "main", "index": 0}]]},
-    "Wait Final 7s": {"main": [[{"node": "Respond Final", "type": "main", "index": 0}]]}
+    "Sector Agent": {"main": [[{"node": "Wait Final 7s", "type": "main", "index": 0}]], "ai_tool": [[{"node": "Vector QA Tool", "type": "ai_tool", "index": 0}]]},
+    "Wait Final 7s": {"main": [[{"node": "Respond Final", "type": "main", "index": 0}]]},
+    "Vector QA Tool": { "vectorStore": [[{"node": "Supabase Vector Store", "type": "vectorStore", "index": 0}]] }
   },
   "active": false,
   "settings": {},
