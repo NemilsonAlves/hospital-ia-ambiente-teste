@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Chat Trauma</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="preconnect" href="https://unpkg.com">
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;margin:0;padding:24px;background:#0f172a;color:#e2e8f0}
+    .card{background:#111827;border:1px solid #1f2937;border-radius:12px;padding:16px;max-width:960px;margin:0 auto 16px}
+    .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .btn{background:#2563eb;color:#fff;border:none;border-radius:8px;padding:10px 14px;cursor:pointer}
+    .btn.secondary{background:#374151}
+    .btn.danger{background:#b91c1c}
+    input[type=file],input[type=text]{background:#0b1220;color:#d1d5db;border:1px solid #1f2937;border-radius:8px;padding:10px;width:100%;max-width:360px}
+    .status{margin-top:8px;font-size:14px;color:#9ca3af}
+    .grid{display:grid;grid-template-columns:1fr;gap:12px}
+    @media(min-width:760px){.grid{grid-template-columns:1fr 1fr}}
+  </style>
+  <script src="https://unpkg.com/@n8n/chat@latest"></script>
+  <script defer src="./site.js"></script>
+  <script>
+    window.CHAT_WEBHOOK_URL = 'SUA_CHAT_URL_DO_N8N';
+    window.UPLOAD_WEBHOOK_URL = 'SUA_WEBHOOK_URL_UPLOAD';
+    window.VOICE_WEBHOOK_URL = 'SUA_WEBHOOK_URL_VOICE';
+  </script>
+  </head>
+<body>
+  <div class="card">
+    <h2>Assistente de Atendimento</h2>
+    <div class="grid">
+      <div>
+        <h3>Upload de Arquivo</h3>
+        <div class="row">
+          <input id="sectorHint" type="text" placeholder="Setor (opcional)">
+          <input id="fileInput" type="file" />
+          <button id="uploadBtn" class="btn">Enviar</button>
+        </div>
+        <div id="uploadStatus" class="status"></div>
+      </div>
+      <div>
+        <h3>Mensagem de Voz</h3>
+        <div class="row">
+          <button id="startRecBtn" class="btn">Gravar</button>
+          <button id="stopRecBtn" class="btn danger" disabled>Parar</button>
+          <button id="clearRecBtn" class="btn secondary">Limpar</button>
+        </div>
+        <div id="voiceStatus" class="status"></div>
+        <audio id="audioPreview" controls style="margin-top:8px;width:100%"></audio>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
