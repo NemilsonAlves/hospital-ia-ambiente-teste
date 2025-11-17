@@ -281,10 +281,13 @@
     {
       "parameters": {
         "agentType": "openaiFunctions",
-        "options": {"enableStreaming": true}
+        "options": {
+          "enableStreaming": true,
+          "systemMessage": "Você é o agente de IA do setor ={{$json.sector_name}}. Interaja com o lead, siga o protocolo informado e responda sempre em pt-br."
+        }
       },
       "id": "c21",
-      "name": "Supervisor Agent",
+      "name": "Sector Agent",
       "type": "n8n-nodes-langchain.agent",
       "typeVersion": 1,
       "position": [3940, 200]
