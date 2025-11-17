@@ -258,6 +258,46 @@
     },
     {
       "parameters": {
+        "operation": "getAll",
+        "schema": "public",
+        "table": "sector_functions",
+        "filters": [
+          {"column":"sector_id","operator":"eq","value":"={{$json.sector_id}}"},
+          {"column":"enabled","operator":"eq","value":true}
+        ],
+        "limit": 100
+      },
+      "id": "c18b",
+      "name": "Fetch Sector Functions",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [3500, 120]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "schema": "public",
+        "table": "functions_catalog",
+        "limit": 100
+      },
+      "id": "c18c",
+      "name": "Fetch Functions Catalog",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [3720, 120]
+    },
+    {
+      "parameters": {
+        "functionCode": "const sf = $prevNode('Fetch Sector Functions').item.json.data || [];\nconst catalog = items[0]?.json?.data || items.map(i=>i.json);\nconst codes = new Set(sf.map(x=>x.function_code));\nconst sel = catalog.filter(c=>codes.has(c.code));\nlet lines = sel.map(c=>`- ${c.title}: ${c.description}`);\nlet ctx = `Setor: ${$json.sector_name}\\nNamespace: ${$json.vector_namespace}\\nFunções disponíveis:\\n` + lines.join('\\n');\nreturn [{ json: { input: 'Converse com o lead conforme contexto abaixo.', context: ctx } }];"
+      },
+      "id": "c18d",
+      "name": "Build Agent Context",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [3940, 120]
+    },
+    {
+      "parameters": {
         "amount": 7,
         "unit": "seconds"
       },
@@ -347,11 +387,14 @@
         [{"node": "Insert Lead", "type": "main", "index": 0}]
       ]
     },
-    "Update Lead": {"main": [[{"node": "Wait Ticket 7s", "type": "main", "index": 0}]]},
-    "Insert Lead": {"main": [[{"node": "Wait Ticket 7s", "type": "main", "index": 0}]]},
+    "Update Lead": {"main": [[{"node": "Fetch Sector Functions", "type": "main", "index": 0}]]},
+    "Insert Lead": {"main": [[{"node": "Fetch Sector Functions", "type": "main", "index": 0}]]},
+    "Fetch Sector Functions": {"main": [[{"node": "Fetch Functions Catalog", "type": "main", "index": 0}]]},
+    "Fetch Functions Catalog": {"main": [[{"node": "Build Agent Context", "type": "main", "index": 0}]]},
+    "Build Agent Context": {"main": [[{"node": "Wait Ticket 7s", "type": "main", "index": 0}]]},
     "Wait Ticket 7s": {"main": [[{"node": "Respond Ticket", "type": "main", "index": 0}]]},
-    "Respond Ticket": {"main": [[{"node": "Supervisor Agent", "type": "main", "index": 0}]]},
-    "Supervisor Agent": {"main": [[{"node": "Wait Final 7s", "type": "main", "index": 0}]]},
+    "Respond Ticket": {"main": [[{"node": "Sector Agent", "type": "main", "index": 0}]]},
+    "Sector Agent": {"main": [[{"node": "Wait Final 7s", "type": "main", "index": 0}]]},
     "Wait Final 7s": {"main": [[{"node": "Respond Final", "type": "main", "index": 0}]]}
   },
   "active": false,
