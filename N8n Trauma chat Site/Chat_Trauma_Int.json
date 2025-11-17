@@ -11,7 +11,7 @@
       },
       "id": "c1",
       "name": "Chat Trigger",
-      "type": "n8n-nodes-langchain.chattrigger",
+      "type": "n8n-nodes-langchain.chatTrigger",
       "typeVersion": 1,
       "position": [200, 200]
     },
@@ -60,7 +60,7 @@
       },
       "id": "c5",
       "name": "Respond List",
-      "type": "n8n-nodes-langchain.respondtochat",
+      "type": "n8n-nodes-langchain.respondToChat",
       "typeVersion": 1,
       "position": [1080, 200]
     },
@@ -107,7 +107,7 @@
       },
       "id": "c9",
       "name": "Respond Invalid",
-      "type": "n8n-nodes-langchain.respondtochat",
+      "type": "n8n-nodes-langchain.respondToChat",
       "typeVersion": 1,
       "position": [1740, 360]
     },
@@ -274,7 +274,7 @@
       },
       "id": "c20",
       "name": "Respond Ticket",
-      "type": "n8n-nodes-langchain.respondtochat",
+      "type": "n8n-nodes-langchain.respondToChat",
       "typeVersion": 1,
       "position": [3720, 200]
     },
