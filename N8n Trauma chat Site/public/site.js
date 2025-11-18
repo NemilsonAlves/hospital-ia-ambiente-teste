@@ -1,3 +1,12 @@
+if ('serviceWorker' in navigator) {
+  (async () => {
+    try {
+      const regs = await navigator.serviceWorker.getRegistrations();
+      for (const r of regs) await r.unregister();
+    } catch {}
+  })();
+}
+
 function uid(){
   const k='chat_user_id';
   let v=localStorage.getItem(k);
@@ -27,6 +36,13 @@ const chat = createChat({
   ],
   metadata: { userId: uid() }
 });
+
+if (location.search.includes('test=1') && 'serviceWorker' in navigator) {
+  (async () => {
+    const regs = await navigator.serviceWorker.getRegistrations();
+    if (regs.length !== 0) throw new Error('Service Worker não removido');
+  })();
+}
 
 const fileInput = document.getElementById('fileInput');
 const uploadBtn = document.getElementById('uploadBtn');
