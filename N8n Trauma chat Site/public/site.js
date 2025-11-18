@@ -7,6 +7,24 @@ function uid(){
 
 const chat = createChat({
   webhookUrl: window.CHAT_WEBHOOK_URL,
+  target: '#n8n-chat',
+  mode: 'fullscreen',
+  enableStreaming: true,
+  loadPreviousSession: true,
+  allowFileUploads: true,
+  allowedFilesMimeTypes: 'image/*,application/pdf,audio/*,video/*',
+  i18n: {
+    en: {
+      title: 'Assistente',
+      subtitle: 'Envie mensagens, arquivos e áudio.',
+      getStarted: 'Nova conversa',
+      inputPlaceholder: 'Digite sua mensagem...'
+    }
+  },
+  initialMessages: [
+    'Olá! 👋',
+    'Sou o assistente. Como posso ajudar hoje?'
+  ],
   metadata: { userId: uid() }
 });
 
