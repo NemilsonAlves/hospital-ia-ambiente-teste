@@ -1,0 +1,390 @@
+.analysis-page {
+    min-height: 100vh;
+    padding: 120px 0 4rem;
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+}
+
+.analysis-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    animation: fadeInUp 0.8s ease-out;
+    position: relative;
+}
+
+.btn-back {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-full);
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-back:hover {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    transform: translateX(-5px);
+}
+
+.analysis-title {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.analysis-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Upload Zone */
+.upload-zone {
+    background: rgba(30, 41, 59, 0.5);
+    border: 2px dashed rgba(16, 185, 129, 0.3);
+    border-radius: var(--radius-lg);
+    padding: 4rem 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.8s ease-out 0.2s backwards;
+}
+
+.upload-zone:hover {
+    border-color: var(--color-primary);
+    background: rgba(30, 41, 59, 0.7);
+}
+
+.upload-icon {
+    font-size: 5rem;
+    margin-bottom: var(--spacing-lg);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.upload-zone h3 {
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-primary);
+}
+
+.upload-zone p {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xl);
+}
+
+.file-input {
+    display: none;
+}
+
+/* Analysis Container */
+.analysis-container {
+    display: grid;
+    gap: var(--spacing-xl);
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.image-preview-section {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.preview-image {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.btn-reset {
+    margin-top: var(--spacing-md);
+    width: 100%;
+}
+
+.action-section {
+    text-align: center;
+    margin: var(--spacing-xl) 0;
+}
+
+/* Analyzing State */
+.analyzing-state {
+    text-align: center;
+    padding: 3rem;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.loader {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(16, 185, 129, 0.2);
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto var(--spacing-lg);
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.analyzing-state p {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.analyzing-detail {
+    color: var(--text-secondary);
+    font-size: 1rem !important;
+}
+
+/* Results Section */
+.results-section {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+}
+
+.result-header h2 {
+    font-size: 2rem;
+    color: var(--text-primary);
+}
+
+.health-score {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.score-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+}
+
+.score-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: white;
+    line-height: 1;
+}
+
+.score-label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Nutrition Grid */
+.nutrition-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.nutrition-card {
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    transition: all 0.3s ease;
+}
+
+.nutrition-card:hover {
+    transform: translateY(-5px);
+    background: rgba(30, 41, 59, 0.8);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.calories-card {
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+.card-icon {
+    font-size: 3rem;
+    filter: drop-shadow(0 2px 8px rgba(16, 185, 129, 0.3));
+}
+
+.card-content h3 {
+    font-size: 2rem;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.card-content p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* Details Grid */
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+.detail-section {
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+}
+
+.detail-section h3 {
+    font-size: 1.3rem;
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-primary);
+}
+
+.ingredients-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.ingredients-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm);
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: var(--radius-sm);
+}
+
+.ingredient-name {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.ingredient-amount {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Micronutrients */
+.micronutrients {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.nutrient-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.nutrient-label {
+    min-width: 100px;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    border-radius: var(--radius-full);
+    transition: width 1s ease-out;
+}
+
+.nutrient-value {
+    min-width: 45px;
+    text-align: right;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Recommendations */
+.recommendations-section {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(139, 92, 246, 0.1));
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+}
+
+.recommendations-section h3 {
+    font-size: 1.3rem;
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-primary);
+}
+
+.recommendations-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.recommendations-list li {
+    color: var(--text-secondary);
+    padding: var(--spacing-sm);
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .analysis-title {
+        font-size: 2.25rem;
+    }
+
+    .btn-back {
+        position: static;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .upload-zone {
+        padding: 3rem 1.5rem;
+    }
+
+    .nutrition-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .result-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .recommendations-list {
+        grid-template-columns: 1fr;
+    }
+}

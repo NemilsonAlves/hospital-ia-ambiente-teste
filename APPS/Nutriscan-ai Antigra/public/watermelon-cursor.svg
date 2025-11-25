@@ -1,0 +1,40 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="watermelonGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B6B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E53935;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Shadow -->
+  <ellipse cx="24" cy="42" rx="11" ry="2.5" fill="black" opacity="0.15"/>
+  
+  <!-- Watermelon slice (semicircle) -->
+  <path d="M12 24C12 17 17 12 24 12C31 12 36 17 36 24C36 31 31 36 24 36C17 36 12 31 12 24Z" 
+        fill="url(#watermelonGradient)"/>
+  
+  <!-- White rind -->
+  <path d="M12 24C12 17 17 12 24 12C31 12 36 17 36 24L12 24Z" 
+        fill="white" 
+        opacity="0.9"/>
+  
+  <!-- Green skin -->
+  <path d="M12 24C12 17 17 12 24 12C31 12 36 17 36 24" 
+        stroke="#43A047" 
+        stroke-width="3" 
+        fill="none"/>
+  
+  <!-- Red flesh -->
+  <path d="M14 24C14 18.5 18.5 14 24 14C29.5 14 34 18.5 34 24L14 24Z" 
+        fill="url(#watermelonGradient)"/>
+  
+  <!-- Seeds -->
+  <ellipse cx="20" cy="20" rx="1" ry="1.5" fill="#1A1A1A" opacity="0.8"/>
+  <ellipse cx="24" cy="18" rx="1" ry="1.5" fill="#1A1A1A" opacity="0.8"/>
+  <ellipse cx="28" cy="20" rx="1" ry="1.5" fill="#1A1A1A" opacity="0.8"/>
+  <ellipse cx="22" cy="22" rx="1" ry="1.5" fill="#1A1A1A" opacity="0.8"/>
+  <ellipse cx="26" cy="22" rx="1" ry="1.5" fill="#1A1A1A" opacity="0.8"/>
+  
+  <!-- Highlight -->
+  <ellipse cx="20" cy="17" rx="2" ry="2.5" fill="white" opacity="0.3"/>
+</svg>

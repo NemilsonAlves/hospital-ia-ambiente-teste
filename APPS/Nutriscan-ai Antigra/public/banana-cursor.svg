@@ -1,0 +1,27 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bananaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFE135;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFC107;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Shadow -->
+  <ellipse cx="24" cy="42" rx="12" ry="2.5" fill="black" opacity="0.15"/>
+  
+  <!-- Banana body -->
+  <path d="M15 18C15 18 12 21 12 27C12 33 15 36 21 36C21 36 24 36 27 33C30 30 33 24 33 18C33 12 30 9 27 9C24 9 21 12 18 15C16.5 16.5 15 18 15 18Z" 
+        fill="url(#bananaGradient)" 
+        stroke="#F9A825" 
+        stroke-width="0.8"/>
+  
+  <!-- Banana highlights -->
+  <ellipse cx="21" cy="21" rx="3" ry="4.5" fill="white" opacity="0.3"/>
+  
+  <!-- Brown spots -->
+  <ellipse cx="18" cy="27" rx="1.5" ry="2.5" fill="#8D6E63" opacity="0.4"/>
+  <ellipse cx="24" cy="24" rx="1.2" ry="1.8" fill="#8D6E63" opacity="0.3"/>
+  
+  <!-- Stem -->
+  <rect x="25.5" y="7.5" width="2.5" height="3" fill="#8D6E63" rx="0.8"/>
+</svg>
